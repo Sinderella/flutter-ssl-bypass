@@ -279,7 +279,7 @@ Before running `flutter-ssl-bypass.js` against the live target, verify:
 
 ## Contingency plan if hook fires but Burp still terminates
 
-This is the realistic Phase 2. If after running `flutter-ssl-bypass.js` you see:
+This is the realistic failure mode. If after running `flutter-ssl-bypass.js` you see:
 - `[self-test] decoder bit-math OK`
 - `[*] verify_cert_chain resolved via ssl_x509.cc-stub @ ...`
 - `[*] Hook verify_cert_chain function (attach + retval.replace(1))`

@@ -25,3 +25,15 @@ venv/
 
 # Node / Bun (in case you run JS tooling here)
 node_modules/
+
+# TypeScript build artifacts
+dist/
+
+# Bun binary lockfile (we use text format bun.lock, committed)
+bun.lockb
+
+# Local planning artifacts (kept local per project config)
+.planning/
+
+# Local Claude Code project instructions (maintainer-specific)
+CLAUDE.md

@@ -47,7 +47,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Print resolved frida-compile version (drift catch)
-        run: bun x frida-compile --version
+        run: node -p "require('frida-compile/package.json').version"
 
       - name: Typecheck (tsc --noEmit, strict)
         run: bun run typecheck

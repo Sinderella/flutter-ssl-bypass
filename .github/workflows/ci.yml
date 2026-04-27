@@ -1,0 +1,64 @@
+# .github/workflows/ci.yml — PR CI for reverse-libflutter
+#
+# Runs on every PR to main: typecheck, lint, build, smoke validation.
+# No write permissions (default read-only GITHUB_TOKEN).
+# Cancels prior runs of the same PR.
+#
+# Bundle-shape gate: `bun run verify:smoke` (scripts/check-smoke-build.ts)
+# enforces the size band [10240, 51200] bytes, structural-parity canary
+# strings, and forbidden Node-only requires. Band derived from the empirical
+# ~20 KB baseline +/- envelope. Bump if a frida-compile or TS upgrade
+# legitimately moves the floor.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Typecheck + Lint + Smoke Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Bun (version from package.json `packageManager` field)
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+          no-cache: true
+
+      - name: Restore Bun + node_modules cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Print resolved frida-compile version (drift catch)
+        run: bun x frida-compile --version
+
+      - name: Typecheck (tsc --noEmit, strict)
+        run: bun run typecheck
+
+      - name: Lint (biome check + tools/lint-pointer-arith.sh)
+        run: bun run lint
+
+      - name: Build release bundle (frida-compile -c)
+        run: bun run build
+
+      - name: Smoke validate bundle (size band, canaries, Node-leak)
+        run: bun run verify:smoke

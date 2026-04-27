@@ -1,0 +1,91 @@
+# .github/workflows/release.yml — Tag-triggered release for reverse-libflutter
+#
+# Trigger: any tag matching `v*` (covers RC tags like `v0.1.0-rc.1` and stable
+# tags like `v0.1.0`). The `prerelease` flag is auto-derived from the tag
+# name: any tag containing `-rc.` is published as a prerelease.
+#
+# Permissions: `contents: write` ONLY at workflow level (principle of least
+# privilege). No `pull-requests`, no `actions`, no other write scopes.
+#
+# No `cancel-in-progress` — every tag push must complete to ensure the
+# artifact lands.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build + Publish GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Bun (version from package.json `packageManager` field)
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+          no-cache: true
+
+      - name: Restore Bun + node_modules cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies (frozen lockfile)
+        run: bun install --frozen-lockfile
+
+      - name: Print resolved frida-compile version (drift catch)
+        run: bun x frida-compile --version
+
+      - name: Typecheck (tsc --noEmit, strict)
+        run: bun run typecheck
+
+      - name: Lint (biome check + tools/lint-pointer-arith.sh)
+        run: bun run lint
+
+      - name: Build release bundle (frida-compile -c)
+        run: bun run build
+
+      - name: Smoke validate bundle (size band, canaries, Node-leak)
+        run: bun run verify:smoke
+
+      - name: Compute SHA-256 sibling
+        run: |
+          cd dist
+          sha256sum flutter-ssl-bypass.js > flutter-ssl-bypass.js.sha256
+          cat flutter-ssl-bypass.js.sha256
+
+      - name: List dist/ before upload (visibility for missing-artifact debug)
+        run: ls -la dist/
+
+      - name: Publish GitHub Release with artifact + sha256 sibling
+        uses: softprops/action-gh-release@v3
+        with:
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-rc.') }}
+          files: |
+            dist/flutter-ssl-bypass.js
+            dist/flutter-ssl-bypass.js.sha256
+          body: |
+            ## Verify the artifact
+
+            ```bash
+            curl -L -O https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/flutter-ssl-bypass.js
+            curl -L -O https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/flutter-ssl-bypass.js.sha256
+            sha256sum -c flutter-ssl-bypass.js.sha256
+            ```
+
+            ---

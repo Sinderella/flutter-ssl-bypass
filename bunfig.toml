@@ -1,0 +1,8 @@
+[install]
+# Use text lockfile (bun.lock, committed to git, diff-able).
+# bun.lockb (binary) is gitignored. Text format chosen per .planning/research/SUMMARY.md
+# gap resolution: friendlier for code review and Phase 3 CI cache keys.
+saveTextLockfile = true
+
+# Strict reproducibility for CI; local installs may relax via --no-frozen-lockfile.
+# Phase 3's CI workflow runs `bun install --frozen-lockfile` to guarantee determinism.

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "files": {
+    "includes": [
+      "src/**",
+      ".github/**",
+      "package.json",
+      "tsconfig.json",
+      "biome.json",
+      "!**/tools",
+      "!**/flutter-ssl-bypass.js",
+      "!**/.planning",
+      "!**/*.so",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/scripts"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "useArrowFunction": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "error",
+        "useImportType": "error",
+        "useTemplate": "off",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "fs": "Frida's QuickJS runtime has no Node fs module — use Frida's File API.",
+              "node:fs": "Frida's QuickJS runtime has no Node fs module — use Frida's File API.",
+              "path": "Frida's QuickJS runtime has no Node path module.",
+              "node:path": "Frida's QuickJS runtime has no Node path module.",
+              "crypto": "Frida's QuickJS runtime has no Node crypto module.",
+              "node:crypto": "Frida's QuickJS runtime has no Node crypto module.",
+              "os": "Frida's QuickJS runtime has no Node os module.",
+              "node:os": "Frida's QuickJS runtime has no Node os module.",
+              "child_process": "Frida's QuickJS runtime has no Node child_process module.",
+              "node:child_process": "Frida's QuickJS runtime has no Node child_process module.",
+              "http": "Frida's QuickJS runtime has no Node http module.",
+              "node:http": "Frida's QuickJS runtime has no Node http module.",
+              "https": "Frida's QuickJS runtime has no Node https module.",
+              "node:https": "Frida's QuickJS runtime has no Node https module.",
+              "net": "Frida's QuickJS runtime has no Node net module.",
+              "node:net": "Frida's QuickJS runtime has no Node net module.",
+              "stream": "Frida's QuickJS runtime has no Node stream module.",
+              "node:stream": "Frida's QuickJS runtime has no Node stream module.",
+              "buffer": "Frida's QuickJS runtime has no Node Buffer.",
+              "node:buffer": "Frida's QuickJS runtime has no Node Buffer.",
+              "process": "Frida's QuickJS runtime has no Node process global.",
+              "node:process": "Frida's QuickJS runtime has no Node process global."
+            }
+          }
+        }
+      },
+      "suspicious": {
+        "noExplicitAny": "warn"
+      }
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}

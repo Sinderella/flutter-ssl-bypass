@@ -1,0 +1,70 @@
+=== Fingerprint: libflutter-dart-3.10.9.so ===
+
+File size: 11,107,920 bytes (10.6 MB)
+
+Arch: arm 64-bit
+Endian: little  Stripped: True
+
+Sections of interest:
+  .dynsym       vaddr=0x2f8  vsize=      12,552
+  .dynstr       vaddr=0x4a60  vsize=       8,112
+  .rela.dyn     vaddr=0x6a10  vsize=     762,288
+  .rodata       vaddr=0xc2e00  vsize=   2,426,896
+  .text         vaddr=0x474cc0  vsize=   6,063,544
+  .data         vaddr=0xab5470  vsize=       8,352
+  .bss          vaddr=0xab7510  vsize=      79,088
+
+Exports: 50 total, 1 JNI-related
+  InternalFlutterGpu_RenderPass_SetDepthWriteEnable            @ 0x87ff50
+  InternalFlutterGpu_RenderPass_SetStencilConfig               @ 0x880014
+  InternalFlutterGpu_Shader_GetUniformStructSize               @ 0x880e04
+  InternalFlutterGpu_ShaderLibrary_GetShader                   @ 0x882ab8
+  JNI_OnLoad                                                   @ 0x4960cc
+  InternalFlutterGpu_RenderPass_SetCullMode                    @ 0x880058
+  InternalFlutterGpu_RenderPass_Initialize                     @ 0x87efc0
+  InternalFlutterGpu_RenderPass_Draw                           @ 0x880078
+  InternalFlutterGpu_Texture_BytesPerTexel                     @ 0x883090
+  InternalFlutterGpu_Shader_GetUniformMemberOffset             @ 0x880e40
+  InternalFlutterGpu_ShaderLibrary_InitializeWithAsset         @ 0x88118c
+  InternalFlutterGpu_RenderPass_SetWindingOrder                @ 0x880068
+  InternalFlutterGpu_Context_InitializeDefault                 @ 0x87e68c
+  InternalFlutterGpu_Context_GetMinimumUniformByteAlignment    @ 0x87e784
+  InternalFlutterGpu_DeviceBuffer_Flush                        @ 0x87ea54
+  ... (35 more)
+
+Scanning strings (izzj)...
+  78,258 strings found
+
+Version fingerprints:
+  (no version strings found; may be an aggressively stripped build)
+
+Candidate anchor strings:
+  [--- ] ssl_client.cc
+  [NEAR] ssl_x509.cc
+          contains @ 0x1b1ede: '../../../flutter/third_party/boringssl/src/ssl/ssl_x509.cc'
+  [NEAR] x509.cc
+          contains @ 0x1b1e9d: '../../../flutter/third_party/boringssl/src/crypto/x509/x_x509.cc'
+          contains @ 0x1b1ede: '../../../flutter/third_party/boringssl/src/ssl/ssl_x509.cc'
+  [--- ] ssl.cc
+  [NEAR] handshake.cc
+          contains @ 0x1b1270: '../../../flutter/third_party/boringssl/src/ssl/handshake.cc'
+  [NEAR] handshake_client.cc
+          contains @ 0x1ad9b1: '../../../flutter/third_party/boringssl/src/ssl/handshake_client.cc'
+  [NEAR] handshake_server.cc
+          contains @ 0x1aec5d: '../../../flutter/third_party/boringssl/src/ssl/handshake_server.cc'
+  [NEAR] tls_method.cc
+          contains @ 0x1b1575: '../../../flutter/third_party/boringssl/src/ssl/tls_method.cc'
+  [NEAR] tls13_client.cc
+          contains @ 0x1ad9f4: '../../../flutter/third_party/boringssl/src/ssl/tls13_client.cc'
+  [HIT ] CERTIFICATE_VERIFY_FAILED
+          exact @ 0x26a7ca
+  [--- ] SSL_ERROR_SSL
+  [--- ] TLS_ERROR
+  [--- ] Dart VM version:
+  [--- ] dart::Isolate
+
+All distinct .cc file references (sorted by rarity):
+
+Quick read:
+  - Classic SSL anchors available: ['CERTIFICATE_VERIFY_FAILED']
+  - Proceed with string-xref strategy as primary.

@@ -1,0 +1,27 @@
+# Third-party Flutter libraries — extracted from real apps; not redistributable.
+# Drop your own libflutter.so here when reproducing.
+*.so
+
+# Frida runtime artefacts
+flutter-bypass-diag-*.txt
+flutter-diag-*.txt
+
+# r2 project files / cache
+*.r2*
+.r2_history
+
+# Editor / OS noise
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python (used by skills/scripts that may be cloned in)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node / Bun (in case you run JS tooling here)
+node_modules/

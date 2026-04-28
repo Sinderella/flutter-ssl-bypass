@@ -5,8 +5,10 @@
  * does not pick up ambient `.d.ts` files. Imported as a side effect from
  * src/main.ts and src/log.ts so the bundler emits the declarations.
  *
- * The `parameters` field is typed as `unknown` — the most honest description
- * of what Frida injects. Validation lives in src/types/parameters.ts.
+ * `parameters` is intentionally NOT declared here. Frida CLI does not populate
+ * `globalThis.parameters` — `-P '{...}'` is delivered via the
+ * `rpc.exports.init(stage, parameters)` RPC method (see src/main.ts and
+ * frida-tools/repl.py:308). `rpc` itself is fully typed by @types/frida-gum.
  *
  * The `console` redeclaration is a workaround: Frida's embedded V8/QuickJS
  * provides `console.log` at runtime but neither @types/frida-gum nor our
@@ -39,9 +41,6 @@ interface FridaObjCBridge {
 }
 
 declare global {
-  // biome-ignore lint/suspicious/noVar: matches Frida's host-side -P parameter injection
-  var parameters: unknown;
-
   // biome-ignore lint/suspicious/noVar: Frida runtime global, declared as `var` for hoisting consistency
   var console: {
     log: (...args: unknown[]) => void;

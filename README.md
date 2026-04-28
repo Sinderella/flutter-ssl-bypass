@@ -11,8 +11,8 @@ A resilient Frida-based SSL pinning bypass for **Android arm64 Flutter apps**. T
 Download the latest release artifact and its sha256 sibling:
 
 ```bash
-curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/download/v0.1.0/flutter-ssl-bypass.js
-curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/download/v0.1.0/flutter-ssl-bypass.js.sha256
+curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/latest/download/flutter-ssl-bypass.js
+curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/latest/download/flutter-ssl-bypass.js.sha256
 ```
 
 Run the agent (parameter-driven — no source edits required):
@@ -32,8 +32,8 @@ If you see `[!] flutter-ssl-bypass requires Frida 17.x runtime APIs`, your `frid
 ## Verify the artifact
 
 ```bash
-curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/download/v0.1.0/flutter-ssl-bypass.js
-curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/download/v0.1.0/flutter-ssl-bypass.js.sha256
+curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/latest/download/flutter-ssl-bypass.js
+curl -L -O https://github.com/Sinderella/flutter-ssl-bypass/releases/latest/download/flutter-ssl-bypass.js.sha256
 sha256sum -c flutter-ssl-bypass.js.sha256
 # expected output: flutter-ssl-bypass.js: OK
 ```
